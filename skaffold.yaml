@@ -1,0 +1,22 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  googleCloudBuild:
+    projectId: ticketing-dev-332615
+  artifacts:
+    - image: us.gcr.io/ticketing-dev-332615/auth
+      # folder that contains the folder for this image
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      # how to handle any files that change in the directories:
+      sync:
+        manual:
+            # watch all files in src folder that have the .ts extension
+          - src: 'src/**/*.ts'
+            # dot means corresponding file inside the container (to where it was found from)
+            dest: .
