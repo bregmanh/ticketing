@@ -1,4 +1,5 @@
 import mongoose from 'mongoose'
+import { Password } from '../services/password'
 
 // describes the attributes that are required to create a new user
 interface UserAttrs {
@@ -28,6 +29,17 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+})
+
+// middleware function implemented into mongoose
+userSchema.pre('save', async function (done) {
+  // this keyword refers to the document that is being saved (the actual user)
+  // checks if we are modifying/saving/creating the password (and not just changing the email)
+  if (this.isModified('password')) {
+    const hashed = await Password.toHash(this.get('password'))
+    this.set('password', hashed)
+  }
+  done()
 })
 
 // adding a custom function to a model
