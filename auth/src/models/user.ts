@@ -28,6 +28,18 @@ const userSchema = new mongoose.Schema({
   password: {
     type: String,
     required: true
+  },
+}, {
+  // mongoose way of customizing how user object will look when JSON stringified
+  // Note: this is view level logic and technically shouldnt be in the model (doesnt work with MVC principles)
+  toJSON: {
+    transform(doc, ret) {
+      ret.id = ret._id
+      // javascript delete keyword to remove a property
+      delete ret._id
+      delete ret.password
+      delete ret.__v
+    }
   }
 })
 

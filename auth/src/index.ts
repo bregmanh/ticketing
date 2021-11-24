@@ -8,9 +8,8 @@ import { currentUserRouter } from './routes/current-user'
 import { signinRouter } from './routes/signin'
 import { signoutRouter } from './routes/signout'
 import { signupRouter } from './routes/signup'
-import { errorHandler } from './middlewares/error-handling'
 import { NotFoundError } from './errors/not-found-error'
-import { User } from './models/user'
+import { errorHandler } from './middlewares/error-handling'
 
 const app = express()
 // traffic being proxied though nginx. By default express wont trust proxied traffic over an HTTPS connection
@@ -34,7 +33,11 @@ app.all('*', async (req, res) => {
 
 app.use(errorHandler)
 
+
 const start = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error('JWT_KEY must be defined')
+  }
   try {
     await mongoose.connect('mongodb://auth-mongo-srv:27017/auth')
     console.log('connected to mongo db')
