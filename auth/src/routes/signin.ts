@@ -1,7 +1,6 @@
 import express, { Request, Response } from 'express'
 import { body } from 'express-validator'
-import { BadRequestError } from '../errors/bad-request-error'
-import { validateRequest } from '../middlewares/validate-request'
+import { validateRequest, BadRequestError } from '@hbticketing/common'
 import { User } from '../models/user'
 import { Password } from '../services/password'
 import jwt from 'jsonwebtoken'
@@ -20,7 +19,7 @@ router.post('/api/users/signin',
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body
     const existingUser = await User.findOne({ email })
     if (!existingUser) {
       throw new BadRequestError('Invalid credentials')

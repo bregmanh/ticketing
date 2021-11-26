@@ -20,3 +20,11 @@ build:
           - src: 'src/**/*.ts'
             # dot means corresponding file inside the container (to where it was found from)
             dest: .
+    - image: us.gcr.io/ticketing-dev-332615/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: '**/*.js'
+            dest: .

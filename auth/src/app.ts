@@ -7,8 +7,7 @@ import { currentUserRouter } from './routes/current-user'
 import { signinRouter } from './routes/signin'
 import { signoutRouter } from './routes/signout'
 import { signupRouter } from './routes/signup'
-import { NotFoundError } from './errors/not-found-error'
-import { errorHandler } from './middlewares/error-handling'
+import { NotFoundError, errorHandler } from '@hbticketing/common'
 
 const app = express()
 // traffic being proxied though nginx. By default express wont trust proxied traffic over an HTTPS connection
