@@ -28,3 +28,15 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: us.gcr.io/ticketing-dev-332615/tickets
+      # folder that contains the folder for this image
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      # how to handle any files that change in the directories:
+      sync:
+        manual:
+            # watch all files in src folder that have the .ts extension
+          - src: 'src/**/*.ts'
+            # dot means corresponding file inside the container (to where it was found from)
+            dest: .

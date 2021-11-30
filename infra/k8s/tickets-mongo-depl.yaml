@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tickets-mongo-depl
+spec:
+  replicas: 1
+  # which pod to select
+  selector: 
+    matchLabels:
+      app: tickets-mongo
+  # pod config
+  template:
+    metadata:
+      labels:
+        app: tickets-mongo
+    spec:
+      containers:
+        - name: tickets-mongo
+          image: mongo
+---
+apiVersion: v1
+kind: Service
+metadata: 
+  name: tickets-mongo-srv
+# default service is the ClusterIP service
+spec:
+# which set of pods to govern access to
+  selector:
+    app: tickets-mongo
+  ports:
+    - name: db
+      protocol: TCP
+      # by default mongo listens to incoming traffic on 27017
+      # this info is in the image docs
+      port: 27017
+      targetPort: 27017
