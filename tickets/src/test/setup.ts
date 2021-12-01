@@ -13,12 +13,11 @@ declare global {
 global.getAuthCookie = () => {
   // Build a JWT payload {id, email}
   const payload = {
-    id: '12345',
+    id: '12345vxcvxcv',
     email: 'test@test.com'
   }
-  const token = jwt.sign({
-    payload
-  }, process.env.JWT_KEY!)
+  const token = jwt.sign(
+    payload, process.env.JWT_KEY!)
   // Build a session object {jwt: MY_JWT}
   const session = { jwt: token }
   // Turn that session to JSON
