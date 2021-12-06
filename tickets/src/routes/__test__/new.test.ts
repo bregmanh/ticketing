@@ -57,7 +57,6 @@ it('returns an error if an invalid price is provided', async () => {
 
 it('creates a ticket with valid inputs', async () => {
   let tickets = await Ticket.find({})
-  console.log('tickets here', tickets)
   expect(tickets.length).toEqual(0)
 
   const title = 'test title'

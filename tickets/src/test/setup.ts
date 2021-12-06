@@ -13,7 +13,7 @@ declare global {
 global.getAuthCookie = () => {
   // Build a JWT payload {id, email}
   const payload = {
-    id: '12345vxcvxcv',
+    id: new mongoose.Types.ObjectId().toHexString(),
     email: 'test@test.com'
   }
   const token = jwt.sign(

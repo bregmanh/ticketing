@@ -4,6 +4,9 @@ import { json } from 'body-parser'
 import cookieSession from 'cookie-session'
 import { NotFoundError, errorHandler, currentUser, requireAuth } from '@hbticketing/common'
 import { createTicketRouter } from './routes/new'
+import { showTicketRouter } from './routes/show'
+import { indexTicketRouter } from './routes'
+import { updateTicketRouter } from './routes/update'
 
 const app = express()
 // traffic being proxied though nginx. By default express wont trust proxied traffic over an HTTPS connection
@@ -20,6 +23,10 @@ app.use(cookieSession({
 //require authentication
 app.use(currentUser)
 app.use(createTicketRouter)
+app.use(showTicketRouter)
+app.use(indexTicketRouter)
+app.use(updateTicketRouter)
+
 
 app.all('*', async (req, res) => {
   throw new NotFoundError()
